@@ -1,0 +1,9 @@
+<h2 class="title">Questions List</h2>
+<div class="questions-list" *ngIf="(questions$ | async) as questions else loading">
+  <app-question *ngFor="let question of questions" [question]="question">
+  </app-question>
+</div>
+<ng-template #loading>
+  Loading...
+</ng-template>
+
