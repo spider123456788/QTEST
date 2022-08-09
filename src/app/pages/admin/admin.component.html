@@ -1,2 +1,5 @@
 <h2 class="title">My Questions</h2>
+<div *ngIf="(userQuestions$ | async) as questions">
+  <app-question *ngFor="let question of questions" [question]="question"></app-question>
+</div>
 

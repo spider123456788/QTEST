@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {getUser} from "./store/user/user.actions";
-import {UserState} from "./store/user/user.reducer";
+
+import {getQuestions} from "./pages/store/questions/qustions.actions";
+import {QuestionsState} from "./pages/store/questions/questions.reducer";
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,10 @@ import {UserState} from "./store/user/user.reducer";
 export class AppComponent implements OnInit{
   title = 'Questionaire';
 
-  constructor(private store: Store<UserState>) {
+  constructor(private store: Store<QuestionsState>) {
   }
 
   ngOnInit() {
-    this.store.dispatch(getUser());
-
+    this.store.dispatch(getQuestions());
   }
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Store} from "@ngrx/store";
-import {Observable} from "rxjs";
-import {Question} from "../../../models/question.model";
-import {selectFeatureQuestions} from "../../store/user/user.selectors";
-import {AppState} from "../../../models/store.models";
+import { Observable } from "rxjs";
+import {Question} from "../../models/question.model";
+import {selectQuestions} from "../store/questions/questions.selectors";
+import {RootState} from "../../store/root-store";
 
 @Component({
   selector: 'app-questions',
@@ -11,11 +11,10 @@ import {AppState} from "../../../models/store.models";
   styleUrls: ['./questions.component.sass']
 })
 export class QuestionsComponent implements OnInit {
-  questions$: Observable<Question[]> = this._store.select(selectFeatureQuestions)
-  constructor(private _store: Store<AppState>) {
+  questions$: Observable<Question[]> = this._store.select(selectQuestions)
 
+  constructor(private _store: Store<RootState>) {
   }
-
   ngOnInit(): void {
 
   }

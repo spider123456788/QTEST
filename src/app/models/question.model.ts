@@ -3,10 +3,12 @@ export interface Question {
   isAnswered: boolean
   type: string
   fields: QuestionField[]
+  createdDate?: Date
+  answeredDate?: Date
   userId: number
 }
 
 export interface QuestionField {
-  checked: boolean
+  checked?: boolean
   text: string
 }

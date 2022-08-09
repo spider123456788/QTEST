@@ -4,15 +4,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EffectsModule } from '@ngrx/effects';
 import {StoreModule} from "@ngrx/store";
-import {SharedModule} from "../shared/shared.module";
+import {SharedModule} from "./shared/shared.module";
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import {routerReducer, RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
 import {ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
-import {RouterStateUrl} from "../models/store.models";
+import {RouterStateUrl} from "./models/store.models";
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
-import { USER_STATE ,userReducer} from "./store/user/user.reducer";
+import { userReducer } from "./pages/store/user/user.reducer";
+import {questionsReducer} from "./pages/store/questions/questions.reducer";
+import {rootInitialState, rootReducers} from "./store/root-store";
+import {UserEffects} from "./pages/store/user/user.effects";
 
 export class CustomSerializer
   implements RouterStateSerializer<RouterStateUrl> {
@@ -39,16 +42,15 @@ export class CustomSerializer
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({
-      router: routerReducer,
-      user: userReducer
+    StoreModule.forRoot(rootReducers, {
+      initialState: rootInitialState
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
       autoPause: true,
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([UserEffects]),
     SharedModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { EditComponent } from './edit.component';
 import {EditRoutingModule} from "./edit-routing.module";
+import {SharedModule} from "../../shared/shared.module";
 
 
 
@@ -8,8 +9,9 @@ import {EditRoutingModule} from "./edit-routing.module";
   declarations: [
     EditComponent
   ],
-  imports: [
-    EditRoutingModule
-  ]
+    imports: [
+        EditRoutingModule,
+        SharedModule
+    ]
 })
 export class EditModule { }

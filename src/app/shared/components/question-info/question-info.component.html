@@ -1,5 +1,5 @@
-<h2 class="title">Create Question</h2>
-  <form class="form" [formGroup]="createQuestionForm" (ngSubmit)="create()">
+<div class="question-form" *ngIf="(question$ | async) as question">
+  <form class="form" [formGroup]="questionForm" (ngSubmit)="create()">
     <div class="form__body">
       <div class="form__title">
         <label>Title:
@@ -18,7 +18,7 @@
         <div class="form__fields-list">
           <input *ngFor="let field of fields" class="input" type="text" formControlName="field">
         </div>
-        <img *ngIf="fields.length < 6" src="assets/images/add-button.svg" class="button add" (click)="newField()">
+        <img *ngIf="fields.length < 6" src="assets/images/add-button.svg" class="button add" (click)="newField(question.fields)">
       </div>
 
     </div>
@@ -26,5 +26,9 @@
       <button type="submit" class="button">Create</button>
     </div>
   </form>
+</div>
+<ng-template #loading>
+  Loading...
+</ng-template>
 
 
