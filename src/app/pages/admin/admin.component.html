@@ -1,5 +1,15 @@
 <h2 class="title">My Questions</h2>
-<div *ngIf="(userQuestions$ | async) as questions">
-  <app-question *ngFor="let question of questions" [question]="question"></app-question>
+<div class="actions">
+  <a routerLink="/admin/create" class="button">Create</a>
+</div>
+<div class="questions">
+  <div class="unanswered" *ngIf="(userUnansweredQuestions$ | async ) as questions">
+    <app-question-card *ngFor="let question of (questions | sort)" [question]="question" (answerQuestion)="answer($event)">
+    </app-question-card>
+  </div>
+  <div class="answered" *ngIf="(userAnsweredQuestions$ | async ) as questions">
+    <app-question-card *ngFor="let question of (questions | sort)" [question]="question">
+    </app-question-card>
+  </div>
 </div>
 

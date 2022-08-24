@@ -3,5 +3,5 @@ import {Question} from "../../../models/question.model";
 
 export const getUserQuestions = createAction(
   '[User] Get User Questions',
-  props<{questions: Question[]}>()
+  props<{answered: Question[], unAnswered: Question[]}>()
 );

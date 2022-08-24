@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Store } from '@ngrx/store';
-import {Observable, Subject } from "rxjs";
+import {Observable, Subject, tap} from "rxjs";
 import {Question} from "../../models/question.model";
-import {selectUserQuestions} from "../store/user/user.selectors";
+import {selectAnsweredQuestions, selectUnansweredQuestions} from "../store/user/user.selectors";
 import {RootState} from "../../store/root-store";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin',
@@ -11,10 +12,10 @@ import {RootState} from "../../store/root-store";
   styleUrls: ['./admin.component.sass']
 })
 export class AdminComponent implements OnInit, OnDestroy {
-  userQuestions$: Observable<Question[]> = this.store.select(selectUserQuestions)
-  constructor(private store: Store<RootState>) {
+  userAnsweredQuestions$: Observable<Question[]> = this.store.select(selectAnsweredQuestions)
+  userUnansweredQuestions$: Observable<Question[]> = this.store.select(selectUnansweredQuestions)
+  constructor(private store: Store<RootState>, private router: Router, private route: ActivatedRoute) {
   }
-
   ngOnInit(): void {
 
   }
@@ -22,4 +23,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
+  answer(question: Question) {
+    this.router.navigate([question.title], {relativeTo: this.route})
+  }
 }

@@ -1,0 +1,16 @@
+<div class="question-card" *ngIf="question">
+  <div class="question-card__title">
+    {{question.title}}
+    <button *ngIf="this.router.url.includes('/admin')" class="button" (click)="questionEdit()">
+      Edit
+    </button>
+  </div>
+  <div class="type">
+    type: {{question.type | uppercase}}
+  </div>
+  <div class="question-card__actions">
+    <button *ngIf="!question.isAnswered" class="button" (click)="answer(question)">
+      Answer
+    </button>
+  </div>
+</div>

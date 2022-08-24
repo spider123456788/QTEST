@@ -1,7 +1,6 @@
-import {createRehydrateReducer} from "../index";
 import {Question} from "../../../models/question.model";
 import * as fromActions from './qustions.actions'
-import {on} from "@ngrx/store";
+import {createReducer, on} from "@ngrx/store";
 export const QUESTION_STATE_KEY = 'questions';
 
 
@@ -14,62 +13,74 @@ export const initialState: QuestionsState = {
   allQuestions: [],
   currentQuestion: null
 };
-export const questionsReducer = createRehydrateReducer(
-  QUESTION_STATE_KEY,
+export const questionsReducer = createReducer(
   initialState,
   on(fromActions.getQuestions, (state) =>
     ({
       ...state,
-      allQuestions: [{
-        title: 'Simple Question',
-        type: '',
-        isAnswered: false,
-        fields: [],
-        userId: 1
-      },
+      allQuestions: [
         {
-          title: 'Simple Question',
-          type: '',
+          title: 'Question 1',
+          type: 'Single',
           isAnswered: false,
-          fields: [],
+          fields: [
+            {
+              text: 'Option 1',
+              checked: false
+            },
+            {
+              text: 'Option 2',
+              checked: false
+            },
+            {
+              text: 'Option 3',
+              checked: false
+            }
+          ],
+          createdDate: new Date(),
+          userId: 1
+        },
+        {
+          title: 'Question 2',
+          type: 'Multi',
+          isAnswered: false,
+          fields: [
+            {
+              text: 'Option 1',
+              checked: false
+            },
+            {
+              text: 'Option 2',
+              checked: false
+            },
+            {
+              text: 'Option 3',
+              checked: false
+            }
+          ],
+          createdDate: new Date(),
           userId: 1
         },
         {
           title: 'Simple Question',
-          type: '',
+          type: 'Open',
           isAnswered: false,
           fields: [],
+          createdDate: new Date(),
           userId: 1
-        },
-        {
-          title: 'Simple Question',
-          type: '',
-          isAnswered: false,
-          fields: [],
-          userId: 1
-        },
-        {
-          title: 'Simple Question',
-          type: '',
-          isAnswered: false,
-          fields: [],
-          userId: 1
-        },
-        {
-          title: 'Simple Question',
-          type: '',
-          isAnswered: false,
-          fields: [],
-          userId: 1
-        }]
+        }
+      ]
     })),
-  on(fromActions.createQuestion, (state, {question}) => ({
+  on(fromActions.createQuestion, (state, {question}) => {
+    console.log(question)
+    return {
       ...state,
       allQuestions: [...state.allQuestions, question]
-  })),
+  }}),
   on(fromActions.editQuestion, (state, {question}) => ({
     ...state,
     allQuestions: state.allQuestions.map((item) => {
+      console.log(item)
       if(item.title === question.title) {
         item = question
       }
@@ -83,6 +94,14 @@ export const questionsReducer = createRehydrateReducer(
   on(fromActions.setCurrentQuestion, (state, {question}) => ({
     ...state,
     currentQuestion: question
+  })),
+  on(fromActions.setAnswerQuestion, (state, {answerQuestion}) => ({
+    ...state,
+    allQuestions: state.allQuestions.map( question => {
+      if (question.title === answerQuestion.title)
+        question = answerQuestion
+      return question
+    })
   }))
 
 );

@@ -1,34 +1,45 @@
-<div class="question-form" *ngIf="(question$ | async) as question">
-  <form class="form" [formGroup]="questionForm" (ngSubmit)="create()">
-    <div class="form__body">
-      <div class="form__title">
-        <label>Title:
-          <input class="input" type="text" formControlName="title" placeholder="Enter title">
+<h2 class="title">Answer Question</h2>
+<form class="form" [formGroup]="questionForm" (ngSubmit)="answer(question)" *ngIf="question; else loading">
+  <div class="form__body">
+    <div class="form__title">
+      {{question.title | uppercase }}
+    </div>
+
+    <div
+      class="form__fields-list"
+      *ngIf="question.type === 'Single'"
+      formGroupName="fieldsSingle"
+    >
+      <div
+        *ngFor="let field of question.fields; let i = index">
+        <label>
+          <input  type="radio" formControlName="field" [value]="field.text">
+          {{field.text}}
         </label>
       </div>
-      <div class="form__type">
-        <span>Type:</span>
-        <label *ngFor="let type of QUESTION_TYPES">
-          <input type="radio" formControlName="type" [value]="type.type">
-          {{type.text}}
+    </div>
+
+    <div class="form__fields-list" *ngIf="question.type === 'Multi'">
+      <div
+        *ngFor="let field of question.fields; let i = index"
+        formArrayName="fields">
+        <label>
+          <input class="checkbox" type="checkbox" [formControlName]='i' [checked]="field.checked">
+            {{field.text}}
         </label>
       </div>
-
-      <div class="form__fields" formGroupName="fields">
-        <div class="form__fields-list">
-          <input *ngFor="let field of fields" class="input" type="text" formControlName="field">
-        </div>
-        <img *ngIf="fields.length < 6" src="assets/images/add-button.svg" class="button add" (click)="newField(question.fields)">
-      </div>
-
     </div>
-    <div class="form__actions">
-      <button type="submit" class="button">Create</button>
+
+    <div class="form__textarea"
+         *ngIf="question.type === 'Open'">
+        <textarea formControlName="openAnswer">
+        </textarea>
     </div>
-  </form>
-</div>
+  </div>
+  <div class="form__actions">
+    <button type="submit" class="button">Answer</button>
+  </div>
+</form>
 <ng-template #loading>
   Loading...
 </ng-template>
-
-

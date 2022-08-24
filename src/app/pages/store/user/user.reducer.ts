@@ -1,6 +1,5 @@
-import { on } from '@ngrx/store';
+import {createReducer, on} from '@ngrx/store';
 import * as UserActions from './user.actions';
-import {createRehydrateReducer} from "../index";
 import {Question} from "../../../models/question.model";
 
 export enum USER_STATE {
@@ -8,19 +7,21 @@ export enum USER_STATE {
 }
 
 export interface UserState {
-  userQuestions: Question[]
   userId: number
+  userAnsweredQuestions: Question[]
+  userUnansweredQuestions: Question[]
 }
 
 export const initialState: UserState = {
-  userQuestions: [],
   userId: 1,
+  userAnsweredQuestions: [],
+  userUnansweredQuestions: []
 };
-export const userReducer = createRehydrateReducer(
-  USER_STATE.USER_STATE_KEY,
+export const userReducer = createReducer(
   initialState,
-  on(UserActions.getUserQuestions, (state, {questions}) =>  ({
+  on(UserActions.getUserQuestions, (state, {answered, unAnswered}) =>  ({
     ...state,
-    userQuestions: questions
+    userAnsweredQuestions: answered,
+    userUnansweredQuestions: unAnswered
   })),
 );

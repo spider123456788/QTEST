@@ -7,14 +7,12 @@ import {StoreModule} from "@ngrx/store";
 import {SharedModule} from "./shared/shared.module";
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import {routerReducer, RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
+import { RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
 import {ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {RouterStateUrl} from "./models/store.models";
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
-import { userReducer } from "./pages/store/user/user.reducer";
-import {questionsReducer} from "./pages/store/questions/questions.reducer";
-import {rootInitialState, rootReducers} from "./store/root-store";
+import {metaReducers, rootReducers} from "./store/root-store";
 import {UserEffects} from "./pages/store/user/user.effects";
 
 export class CustomSerializer
@@ -37,14 +35,12 @@ export class CustomSerializer
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot(rootReducers, {
-      initialState: rootInitialState
-    }),
+    StoreModule.forRoot(rootReducers, {metaReducers}),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
@@ -56,13 +52,13 @@ export class CustomSerializer
     StoreRouterConnectingModule.forRoot(),
   ],
   exports: [
-    BrowserModule
+    BrowserModule,
   ],
     providers: [
       {
         provide: RouterStateSerializer,
         useClass: CustomSerializer
-      }
+      },
     ],
   bootstrap: [AppComponent]
 })

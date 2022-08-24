@@ -1,7 +1,7 @@
 <h2 class="title">Questions List</h2>
-<div class="questions-list" *ngIf="(questions$ | async) as questions else loading">
-  <app-question *ngFor="let question of questions" [question]="question">
-  </app-question>
+<div class="questions-list" *ngIf="(questions$ | async ) as questions else loading">
+  <app-question-card *ngFor="let question of questions | sort" [question]="question" (answerQuestion)="answer($event)">
+  </app-question-card>
 </div>
 <ng-template #loading>
   Loading...

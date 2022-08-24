@@ -2,8 +2,9 @@ export interface Question {
   title: string
   isAnswered: boolean
   type: string
-  fields: QuestionField[]
-  createdDate?: Date
+  fields: QuestionField[],
+  openAnswer?: string
+  createdDate: Date
   answeredDate?: Date
   userId: number
 }

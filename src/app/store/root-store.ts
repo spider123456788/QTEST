@@ -1,8 +1,9 @@
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
-import { ActionReducerMap } from '@ngrx/store';
+import {ActionReducerMap, MetaReducer} from '@ngrx/store';
 import {userReducer, UserState} from "../pages/store/user/user.reducer";
 import {questionsReducer, QuestionsState} from "../pages/store/questions/questions.reducer";
 import {RouterStateUrl} from "../models/store.models";
+import {hydrationMetaReducer} from "./hydration/hydrate.root";
 
 export interface RootState {
   router: RouterReducerState<RouterStateUrl> | null;
@@ -16,14 +17,6 @@ export const rootReducers: ActionReducerMap<RootState> = {
   questions: questionsReducer
 };
 
-export const rootInitialState: RootState = {
-  router: null,
-  user: {
-    userQuestions: [],
-    userId: 1
-  },
-  questions: {
-    allQuestions: [],
-    currentQuestion: null
-  }
-};
+export const metaReducers: MetaReducer[] = [
+  hydrationMetaReducer
+]

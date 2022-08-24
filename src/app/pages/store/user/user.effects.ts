@@ -21,8 +21,9 @@ export class UserEffects {
         .pipe(
           map(([questions,userId]) => {
             const userQuestions = questions.filter(question => question.userId === userId)
-            console.log(userQuestions)
-            return getUserQuestions({questions: userQuestions})
+            const answered = userQuestions.filter(el => el.isAnswered === true )
+            const unAnswered = userQuestions.filter(el => el.isAnswered === false )
+            return getUserQuestions({unAnswered: unAnswered, answered: answered})
           }),
           catchError(() => EMPTY)
         ))
