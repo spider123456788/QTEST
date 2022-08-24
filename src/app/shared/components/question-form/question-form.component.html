@@ -1,0 +1,47 @@
+  <form class="form" [formGroup]="questionForm" (ngSubmit)="submit()">
+    <div class="form__body">
+      <div class="form__title">
+        <label>Title:
+          <input class="input" type="text" formControlName="title" placeholder="Enter title" [value]="question?.title">
+        </label>
+      </div>
+      <div class="form__type">
+        <span>Type:</span>
+        <label *ngFor="let item of QUESTION_TYPES">
+          <input type="radio" formControlName="type" [value]="item.type">
+          {{item.text}}
+        </label>
+      </div>
+
+      <div
+        class="form__fields"
+        *ngIf="questionFormType.value !== 'Open'">
+        <div
+          class="form__fields-list"
+          formArrayName="fields">
+          <div *ngFor="let field of questionFormFields.controls; let i = index">
+            <div [formGroupName]="i">
+              <input class="input" type="text" formControlName="text">
+            </div>
+          </div>
+        </div>
+        <img
+          *ngIf="questionFormFields.length < 6"
+          src="assets/images/add-button.svg"
+          class="button add"
+          (click)="addField()">
+      </div>
+
+    </div>
+    <div class="form__actions">
+      <button type="submit" class="button">{{action}}</button>
+    </div>
+  </form>
+
+
+
+<ng-template #loading>
+  Loading...
+</ng-template>
+
+
