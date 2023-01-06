@@ -4,6 +4,8 @@ import {QuestionsRoutingModule} from "./questions-routing.module";
 import {SharedModule} from "../../shared/shared.module";
 import {CommonModule} from "@angular/common";
 import {AppModule} from "../../app.module";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HighchartsChartModule} from "highcharts-angular";
 
 
 
@@ -12,9 +14,12 @@ import {AppModule} from "../../app.module";
     QuestionsComponent
   ],
     imports: [
-        CommonModule,
-        QuestionsRoutingModule,
-        SharedModule,
+      CommonModule,
+      QuestionsRoutingModule,
+      SharedModule,
+      FormsModule,
+      ReactiveFormsModule,
+      HighchartsChartModule
     ]
 })
 export class QuestionsModule { }

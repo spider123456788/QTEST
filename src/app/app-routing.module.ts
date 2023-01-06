@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {QuestionInfoComponent} from "./shared/components/question-info/question-info.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/questions', pathMatch: 'full' },
