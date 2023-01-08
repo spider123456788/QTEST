@@ -8,9 +8,18 @@
 <!--</ng-template>-->
 <div class="page-container">
   <form class="form" [formGroup]="plotrData" (ngSubmit)="onSubmit()">
-    <input type="text" formControlName="price">
-    <input type="text" formControlName="term">
-    <input type="text" formControlName="acceleration">
+    <label>
+      Price:
+      <input type="text" formControlName="price">
+    </label>
+    <label>
+      Term:
+      <input type="text" formControlName="term">
+    </label>
+    <label>
+      Acceleration:
+      <input type="text" formControlName="acceleration">
+    </label>
     <button type="submit">Calculate</button>
   </form>
   <div id="result" *ngIf="linechart1">

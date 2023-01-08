@@ -47,29 +47,35 @@ export class QuestionsComponent implements OnInit {
       i,
       m,
       y,
-      a, aa, ab, ac, ad, ae, af, ag, ah,
+      a, aa = 0, ab, ac = su, ad, as = ye, af, ag, ah,
       b;
 
     y = ye*12;
 
     m = 0;
 
-    for (i = ye; i> 0; i--) {
-      m = m+i;
+    for (i = 0; i<= ye; i++) {
+      m += i;
     };
-
-    for (i = y; i> 0; i--) {
+    ad = as / m;
+    for (i = 0; i< y; i++) {
       d1.push([i, su/y]);
+      //pervie 12 mes
+      if (i%12 === 0) {
+        ac = ac - aa;
+        aa = 0;
+        ad = as-- / m
+      }
       if(i> 0 ){
-        aa = su/ye*ko;
-        a = aa/12;
-        b = (su*1/(m))/12;
+        a = (ac/ye)*(ko/12);
+        aa += a
+        b = su*ad;
       }
-      if(i> 12 ){
-        b = (su*2/(m))/12;
-        ab = a? (su-a)/ye*ko: (su-b)/ye*ko;
-        a = ab/12;
-      }
+      // if(i > 12 ){
+      //   b = (su*2/(m))/12;
+      //   ab = a? (su-a)/ye*ko: (su-b)/ye*ko;
+      //   a = ab/12;
+      // }
       d2.push([i, a]);
       d3.push([i, b]);
     }
